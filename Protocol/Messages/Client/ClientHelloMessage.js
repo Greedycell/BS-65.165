@@ -1,5 +1,8 @@
 const PiranhaMessage = require('../../PiranhaMessage')
 const LoginFailedMessage = require('../Server/LoginFailedMessage')
+const LoginOkMessage = require('../Server/LoginOkMessage')
+const OwnHomeDataMessage = require('../Server/OwnHomeDataMessage')
+const PopupMessage = require('../Server/PopupMessage')
 
 class ClientHelloMessage extends PiranhaMessage {
   constructor (bytes, client) {
@@ -12,7 +15,12 @@ class ClientHelloMessage extends PiranhaMessage {
   async decode () {}
 
   async process () {
-    await new LoginFailedMessage(this.client, 3, 'You need to kill pepper to access the server!').send()
+    setTimeout(() => {
+      new LoginOkMessage(this.client).send()
+      new OwnHomeDataMessage(this.client).send()
+      //new PopupMessage(this.client).send()
+    }, 2000)
+    //await new LoginFailedMessage(this.client, 3, 'You need to kill pepper to access the server!').send()
   }
 }
 
